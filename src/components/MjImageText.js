@@ -1,12 +1,13 @@
-import reverse from 'lodash/reverse'
+import reverse from 'lodash/reverse';
 
-import { registerDependencies } from 'mjml-validator'
-import { BodyComponent } from 'mjml-core'
+import {registerDependencies} from 'mjml-validator';
+import {BodyComponent} from 'mjml-core';
+
 registerDependencies({
   'mj-image-text': [],
   'mj-body': ['mj-image-text'],
   'mj-wrapper': ['mj-image-text'],
-})
+});
 
 export default class MjImageText extends BodyComponent {
   static endingTag = true
@@ -18,7 +19,7 @@ export default class MjImageText extends BodyComponent {
   static allowedAttributes = {
     'background-color': 'color',
     'image-position': 'enum(left,right)',
-    'color': 'color',
+    color: 'color',
     'font-size': 'unit(px)',
     'image-padding': 'unit(px){4}',
     'image-src': 'string',
@@ -29,7 +30,7 @@ export default class MjImageText extends BodyComponent {
   static defaultAttributes = {
     'background-color': null,
     'image-position': 'right',
-    'color': 'white',
+    color: 'white',
     'font-size': '10px',
     'image-padding': 0,
     'image-src': null,
@@ -42,7 +43,7 @@ export default class MjImageText extends BodyComponent {
       <mj-column
         ${this.htmlAttributes({
           width: this.getAttribute('column-width'),
-          'background-color': this.getAttribute('background-color')
+          'background-color': this.getAttribute('background-color'),
         })}
       >
         <mj-image
@@ -54,7 +55,7 @@ export default class MjImageText extends BodyComponent {
         >
         </mj-image>
     </mj-column>
-    `
+    `;
   }
 
   renderText() {
@@ -62,7 +63,7 @@ export default class MjImageText extends BodyComponent {
       <mj-column
         ${this.htmlAttributes({
           width: this.getAttribute('column-width'),
-          'background-color': this.getAttribute('background-color')
+          'background-color': this.getAttribute('background-color'),
         })}
       >
         <mj-text
@@ -74,21 +75,23 @@ export default class MjImageText extends BodyComponent {
           ${this.getContent()}
         </mj-text>
       </mj-column>
-    `
+    `;
   }
 
   render() {
-    const content = [this.renderText(), this.renderImage()]
-    const orderedContent = this.getAttribute('image-position') === 'right' ? content : reverse(content)
+    const content = [this.renderText(), this.renderImage()];
+    const orderedContent = this.getAttribute('image-position') === 'right' ?
+      content :
+      reverse(content);
 
     return this.renderMJML(`
 			<mj-section
         ${this.htmlAttributes({
-          'background-color': this.getAttribute('background-color')
+          'background-color': this.getAttribute('background-color'),
         })}
       >
         ${orderedContent}
 			</mj-section>
-		`)
+		`);
   }
 }

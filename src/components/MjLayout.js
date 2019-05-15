@@ -1,5 +1,5 @@
-import { registerDependencies } from 'mjml-validator'
-import { BodyComponent } from 'mjml-core'
+import {registerDependencies} from 'mjml-validator';
+import {BodyComponent} from 'mjml-core';
 
 registerDependencies({
   // Tell the validator which tags are allowed as our component's children
@@ -15,12 +15,12 @@ registerDependencies({
     'mj-spacer',
     'mj-table',
     'mj-text',
-    'mj-navbar'
+    'mj-navbar',
   ],
   // Now tell the validator which tags are allowed as our component's parent
   'mj-wrapper': ['mj-layout'],
   'mj-body': ['mj-layout'],
-})
+});
 
 /*
   This component is an example of layout, which uses existing mjml components
@@ -29,20 +29,20 @@ registerDependencies({
 */
 export default class MjLayout extends BodyComponent {
   constructor(initialDatas = {}) {
-    super(initialDatas)
-    this.cssId = Math.floor(Math.random() * 9) + 1
+    super(initialDatas);
+    this.cssId = Math.floor(Math.random() * 9) + 1;
   }
 
   // Tells the validator which attributes are allowed for mj-layout
   static allowedAttributes = {
     'background-color': 'color',
-    color: 'color'
+    color: 'color',
   }
 
   // Exactly what the name suggests. Fallback value for this.getAttribute('attribute-name').
   static defaultAttributes = {
     'background-color': 'white',
-    color: 'black'
+    color: 'black',
   }
 
   /*
@@ -50,7 +50,7 @@ export default class MjLayout extends BodyComponent {
     Mostly useful for adding media queries
     This css will only be added once even if the component is used multiple times
   */
-  headStyle = breakpoint => `
+  headStyle = (breakpoint) => `
       .mj-layout {
         border: 10px solid black !important;
       }
@@ -65,16 +65,16 @@ export default class MjLayout extends BodyComponent {
     This function allows to pass css directly to the <head>
     This css will be added once for each instance of this component
     This allows to specify css for each instance depending on attributes
-    See mj-carousel component for a nice exemple of what we can do with this
+    See mj-carousel component for a nice example of what we can do with this
   */
-  componentHeadStyle = breakpoint => {
+  componentHeadStyle = (breakpoint) => {
     return `
       @media only screen and (max-width:${breakpoint}) {
         .mj-layout-${this.cssId} {
           width: ${this.cssId * 60}px !important;
         }
       }
-    `
+    `;
   }
 
   render() {
@@ -86,16 +86,21 @@ export default class MjLayout extends BodyComponent {
 			<mj-section css-class="mj-layout mj-layout-${this.cssId}">
 				<mj-column background-color="${this.getAttribute('background-color')}">
 					${this.renderChildren(
-            this.props.children,
-            {
-              /* The rawXML option prevents processing on children : we already call this.renderMJML on the whole block so we don't want the children to be processed twice */
+            this.props.children, {
+              /**
+               * The rawXML option prevents processing on children : we already call this.renderMJML
+               * on the whole block so we don't want the children to be processed twice
+               * */
               rawXML: true,
-              /* The renderer option allows to use a specific rendering function, or wrap each child if needed. Below is the default, see mj-column code for an example of this. */
-              renderer: component => component.render,
+              /**
+               * The renderer option allows to use a specific rendering function, or wrap each child
+               * if needed. Below is the default, see mj-column code for an example of this.
+               * */
+              renderer: (component) => component.render,
             }
           )}
 				</mj-column>
 			</mj-section>
-		`)
+		`);
   }
 }
